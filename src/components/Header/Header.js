@@ -19,9 +19,9 @@ const Header = () => {
           </a>
         </li>
         <li className={classes.header__item}>
-          <a className={classes.header__link} href="#">
+          <Link to="/sign-up" className={classes.header__link}>
             Sign Up
-          </a>
+          </Link>
         </li>
       </ul>
     </nav>

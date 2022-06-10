@@ -6,6 +6,7 @@ import Header from '../Header';
 import ArticleList from '../ArticleList';
 import Article from '../Article';
 import Spinner from '../Spinner';
+import SignUp from '../SignUp';
 
 import classes from './App.module.scss';
 import 'antd/dist/antd.css';
@@ -54,6 +55,7 @@ const App = () => {
             }}
             exact
           />
+          <Route path="/sign-up" component={SignUp} exact />;
           <Route render={() => <h2 className={classes.not__found}>This page does not exist</h2>} />;
         </Switch>
       </Router>
