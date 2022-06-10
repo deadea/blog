@@ -7,6 +7,7 @@ import ArticleList from '../ArticleList';
 import Article from '../Article';
 import Spinner from '../Spinner';
 import SignUp from '../SignUp';
+import SignIn from '../SignIn';
 
 import classes from './App.module.scss';
 import 'antd/dist/antd.css';
@@ -17,6 +18,10 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    console.log('mount app');
+  });
 
   useEffect(() => {
     loadArticles();
@@ -56,6 +61,7 @@ const App = () => {
             exact
           />
           <Route path="/sign-up" component={SignUp} exact />;
+          <Route path="/sign-in" component={SignIn} exact />;
           <Route render={() => <h2 className={classes.not__found}>This page does not exist</h2>} />;
         </Switch>
       </Router>

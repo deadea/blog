@@ -18,7 +18,7 @@ const ArticleShort = ({ data, loggedIn }) => {
     });
   }
 
-  const like = data.favorited && loggedIn ? likeActive : likeInactive;
+  const like = data.favorited && loggedIn ? likeActive : likeInactive; //исправить на favorited
 
   return (
     <div className={classes.article}>

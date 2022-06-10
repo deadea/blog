@@ -14,9 +14,9 @@ const Header = () => {
       </ul>
       <ul className={classes.header__block}>
         <li className={classes.header__item}>
-          <a className={classes.header__link} href="#">
+          <Link to="/sign-in" className={classes.header__link}>
             Sign In
-          </a>
+          </Link>
         </li>
         <li className={classes.header__item}>
           <Link to="/sign-up" className={classes.header__link}>

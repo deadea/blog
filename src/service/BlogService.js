@@ -24,6 +24,16 @@ class BlogService {
     const result = await res.json();
     return result;
   }
+
+  async loginUser(data) {
+    const res = await fetch(`${this._apiBase}users/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    const result = await res.json();
+    return result;
+  }
   /*
   async rateMovie(movieId, sessionId, rating) {
     const res = await fetch(

@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
+import { Link, Redirect } from 'react-router-dom';
 
 import blogService from '../../service/BlogService';
 
@@ -27,9 +28,9 @@ const SignUp = () => {
 
     const result = blogService.createUser(newData).then((result) => {
       if (result.errors) {
-        console.log(result.errors);
+        //console.log(result.errors);
         setRegErrors(result.errors);
-        console.log(regErrors);
+        //console.log(regErrors);
       } else {
         setRegistered(true);
       }
@@ -37,7 +38,6 @@ const SignUp = () => {
   };
 
   if (!registered) {
-    console.log(regErrors);
     return (
       <div className={classes.signUp}>
         <form className={classes.signUp__form} onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -117,13 +117,14 @@ const SignUp = () => {
           </label>
           <button className={classes.signUp__btn}>Create</button>
           <span className={classes.signUp__link}>
-            Already have an account? <a>Sign In.</a>
+            Already have an account?
+            <Link to="/sign-in"> Sign In.</Link>
           </span>
         </form>
       </div>
     );
   }
-  return <h1>LINK TO LOGIN</h1>;
+  return <Redirect to="/sign-in" />;
 };
 
 export default SignUp;
