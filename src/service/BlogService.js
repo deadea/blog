@@ -14,6 +14,16 @@ class BlogService {
     const result = await res.json();
     return result;
   }
+
+  async createUser(data) {
+    const res = await fetch(`${this._apiBase}users`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    const result = await res.json();
+    return result;
+  }
   /*
   async rateMovie(movieId, sessionId, rating) {
     const res = await fetch(
