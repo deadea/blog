@@ -1,0 +1,10 @@
+@import '../../assets/colors.scss';
+.list {
+  margin: 0 auto;
+  padding: 26px 0;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  //justify-content: space-between;
+  align-items: center;
+}

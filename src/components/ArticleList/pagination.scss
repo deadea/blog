@@ -1,0 +1,13 @@
+@import '../../assets/colors.scss';
+
+.ant-pagination-item.ant-pagination-item-active {
+  background-color: $accentColor;
+}
+.ant-pagination-item.ant-pagination-item-active > a {
+  color: white;
+}
+li.ant-pagination-item,
+li.ant-pagination-prev,
+li.ant-pagination-next {
+  border-radius: 4px;
+}
