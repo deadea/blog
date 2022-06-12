@@ -34,6 +34,24 @@ class BlogService {
     const result = await res.json();
     return result;
   }
+  async getCurrentUser(token) {
+    const res = await fetch(`${this._apiBase}user`, {
+      method: 'GET',
+      headers: new Headers({
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }),
+      body: JSON.stringify(),
+    });
+    const result = await res.json();
+    return result;
+  }
+  async getProfile(username) {
+    //неиспользован пока
+    const res = await fetch(`${this._apiBase}profiles/${username}`);
+    const result = await res.json();
+    return result;
+  }
   /*
   async rateMovie(movieId, sessionId, rating) {
     const res = await fetch(

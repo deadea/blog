@@ -18,8 +18,7 @@ const ArticleShort = ({ data, loggedIn }) => {
     });
   }
 
-  const like = data.favorited && loggedIn ? likeActive : likeInactive; //исправить на favorited
-
+  const like = data.favorited && loggedIn ? likeActive : likeInactive;
   return (
     <div className={classes.article}>
       <div className={classes.article__header}>
@@ -49,26 +48,3 @@ const ArticleShort = ({ data, loggedIn }) => {
 };
 
 export default ArticleShort;
-
-/*
-
-"article": {
-  "slug": "Explore-implementations-1",
-  "title": "Explore implementations",
-  "description": "discover the implementations created by the RealWorld community",
-  "body": "Over 100 implementations have been created using various languages, libraries, and frameworks.\n\nExplore them on CodebaseShow.",
-  "tagList": [
-    "codebaseShow",
-    "implementations"
-  ],
-  "createdAt": "2021-11-24T12:11:07.952Z",
-  "updatedAt": "2021-11-24T12:11:07.952Z",
-  "favorited": false,
-  "favoritesCount": 1541,
-  "author": {
-    "username": "Gerome",
-    "bio": null,
-    "image": "https://api.realworld.io/images/demo-avatar.png",
-    "following": false
-  }
-}*/

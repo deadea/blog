@@ -7,7 +7,7 @@ import storage from '../../service/storage';
 
 import classes from './signIn.module.scss';
 
-const SignIn = () => {
+const SignIn = ({ loginSuccess }) => {
   const {
     register,
     handleSubmit,
@@ -23,13 +23,11 @@ const SignIn = () => {
 
     const result = blogService.loginUser(newData).then((result) => {
       if (result.errors) {
-        //console.log(JSON.stringify(result.errors));
         setLogErrors(result.errors);
       } else {
         setLoggedIn(true);
         storage.setToStorage('token', result.user.token);
-        ////////////////////////////////////////////////
-        ///////////////////////////////////////////////
+        loginSuccess(result.user);
       }
     });
   };

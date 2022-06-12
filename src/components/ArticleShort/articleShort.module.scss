@@ -56,12 +56,14 @@
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+  justify-content: space-between;
 }
 .article__tag {
   height: 20px;
   padding-top: 0;
   pointer-events: none;
   font-size: 12px;
+  margin-right: 5px;
 }
 .article__author {
   display: flex;
