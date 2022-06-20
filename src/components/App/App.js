@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import blogService from '../../service/BlogService';
 import storage from '../../service/storage';
@@ -9,6 +9,7 @@ import Article from '../Article';
 import Spinner from '../Spinner';
 import SignUp from '../SignUp';
 import SignIn from '../SignIn';
+import Profile from '../Profile';
 
 import classes from './App.module.scss';
 import 'antd/dist/antd.css';
@@ -22,14 +23,14 @@ const App = () => {
   const [userData, setUserData] = useState();
 
   useEffect(() => {
-    console.log('useEffect get logged userdata');
+    //console.log('useEffect get logged userdata');
     getLoggedUser();
   }, [loggedIn]);
 
   useEffect(() => {
-    console.log('useEffect load articles');
+    //console.log('useEffect load articles');
     loadArticles(page);
-  }, [userData, loggedIn]);
+  }, [userData, loggedIn, page]);
 
   const loadArticles = (page) => {
     blogService.getArticles(page).then((result) => {
@@ -66,7 +67,6 @@ const App = () => {
   ) : (
     <Spinner />
   );
-  console.log(loggedIn);
   return (
     <div className={classes.wrapper}>
       <Router>
@@ -83,8 +83,20 @@ const App = () => {
             exact
           />
           <Route path="/sign-up" component={SignUp} exact />;
-          <Route path="/sign-in" render={() => <SignIn loginSuccess={loginSuccess} />} />;
-          <Route render={() => <h2 className={classes.not__found}>This page does not exist</h2>} />;
+          <Route path="/sign-in" render={() => <SignIn loginSuccess={loginSuccess} />} exact />;
+          <Route
+            path="/profile"
+            render={() =>
+              loggedIn ? (
+                <Profile userData={userData} getLoggedUser={getLoggedUser} loggedIn={loggedIn} />
+              ) : (
+                <Redirect to="/sign-in" />
+              )
+            }
+            exact
+          />
+          ;
+          <Route render={() => <h2 className={classes.not__found}>This page does not exist</h2>} exact />;
         </Switch>
       </Router>
     </div>
@@ -92,5 +104,3 @@ const App = () => {
 };
 
 export default App;
-
-//<Route path="/sign-in" component={SignIn} exact />;

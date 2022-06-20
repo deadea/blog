@@ -46,22 +46,21 @@ class BlogService {
     const result = await res.json();
     return result;
   }
-  async getProfile(username) {
-    //неиспользован пока
-    const res = await fetch(`${this._apiBase}profiles/${username}`);
+  async updateUser(data) {
+    const res = await fetch(`${this._apiBase}user`, {
+      method: 'PUT',
+      headers: new Headers({
+        Authorization: `Bearer ${data.user.token}`,
+        'Content-Type': 'application/json',
+      }),
+      body: JSON.stringify(data),
+    });
     const result = await res.json();
     return result;
   }
-  /*
-  async rateMovie(movieId, sessionId, rating) {
-    const res = await fetch(
-      `${this._apiBase}movie/${movieId}/rating?api_key=${this._apiKey}&guest_session_id=${sessionId}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ value: rating }),
-      }
-    );
+  /*async getProfile(username) {
+    //неиспользован пока
+    const res = await fetch(`${this._apiBase}profiles/${username}`);
     const result = await res.json();
     return result;
   }

@@ -6,9 +6,9 @@ import classes from './header.module.scss';
 
 const Header = ({ loggedIn, userData, logOut }) => {
   const profilePic = userData?.image ? (
-    <img src={userData.image} alt="аватар профиля"></img>
+    <img src={userData.image} alt="аватар профиля" className={classes.header__profilepic}></img>
   ) : (
-    <img src={placeholder} alt="аватар профиля"></img>
+    <img src={placeholder} alt="аватар профиля" className={classes.header__profilepic}></img>
   );
   if (loggedIn && userData) {
     return (
@@ -22,12 +22,12 @@ const Header = ({ loggedIn, userData, logOut }) => {
         </ul>
         <ul className={classes.header__block}>
           <li className={classes.header__item_loggedin}>
-            <Link to="/sign-in" className={classes.header__link}>
+            <Link to="/" className={classes.header__link}>
               Create article
             </Link>
           </li>
           <li className={classes.header__item_loggedin}>
-            <Link to="/sign-in" className={classes.header__link}>
+            <Link to="/profile" className={classes.header__link}>
               {userData.username}
               {profilePic}
             </Link>
