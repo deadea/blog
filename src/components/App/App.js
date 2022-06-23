@@ -45,7 +45,6 @@ const App = () => {
   }, [userData, loggedIn, page]);
 
   const loadArticles = (page) => {
-    console.log('loadarticles');
     blogService.getArticles(page).then((result) => {
       setData(result.articles);
       setTotal(result.articlesCount);
@@ -170,14 +169,3 @@ const App = () => {
 };
 
 export default App;
-
-/*
-          <Route
-            path="/profile"
-            render={() =>
-              loggedIn ? <Profile userData={userData} getLoggedUser={getLoggedUser} /> : <Redirect to="/sign-in" />
-            }
-            exact
-          />
-          ;
-*/

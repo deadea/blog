@@ -68,27 +68,3 @@ const Header = ({ loggedIn, userData, logOut }) => {
 };
 
 export default Header;
-
-/*
-    <nav className={classes.header}>
-      <ul className={classes.header__block}>
-        <li className={classes.header__item}>
-          <a className={classes.header__link} href="#">
-            Realworld Blog
-          </a>
-        </li>
-      </ul>
-      <ul className={classes.header__block}>
-        <li className={classes.header__item}>
-          <a className={classes.header__link} href="#">
-            Sign In
-          </a>
-        </li>
-        <li className={classes.header__item}>
-          <a className={classes.header__link} href="#">
-            Sign Up
-          </a>
-        </li>
-      </ul>
-    </nav>
-*/

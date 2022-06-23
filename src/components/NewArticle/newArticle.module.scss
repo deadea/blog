@@ -48,11 +48,11 @@
 }
 textarea.newArticle__input {
   height: 168px;
-  //overflow-x: scroll;
 }
 
 .newArticle__tags .newArticle__input {
   width: 300px;
+  margin-top: 7px;
 }
 ::placeholder {
   color: #bfbfbf;
@@ -60,7 +60,6 @@ textarea.newArticle__input {
 .newArticle__tags {
   align-self: flex-start;
   display: flex;
-  //width: 100%;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
@@ -83,6 +82,7 @@ textarea.newArticle__input {
   background: transparent;
   border: 1px solid #1890ff;
   border-radius: 4px;
+  margin-top: 7px;
   padding: 8px 40px;
   color: #1890ff;
   margin-left: 18px;
@@ -92,7 +92,7 @@ textarea.newArticle__input {
   background: transparent;
   border: 1px solid $warningColor;
   border-radius: 4px;
-  padding: 8px 40px;
+  padding: 8px 32px;
   color: $warningColor;
   margin-left: 18px;
 }

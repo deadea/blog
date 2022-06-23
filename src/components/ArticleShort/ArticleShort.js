@@ -40,7 +40,6 @@ const ArticleShort = ({ data, loggedIn, likes, addLike, removeLike, userData, lo
       });
     } else {
       await blogService.unFavoriteArticle(data.slug, userData.token).then((result) => {
-        console.log('dislike');
         removeLike(data.slug);
         loadArticles();
       });

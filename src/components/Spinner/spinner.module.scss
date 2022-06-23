@@ -34,7 +34,7 @@
   position: relative;
   transform: translateZ(0) scale(0.51);
   backface-visibility: hidden;
-  transform-origin: 0 0; /* see note above */
+  transform-origin: 0 0;
 }
 .spinner div {
   box-sizing: content-box;

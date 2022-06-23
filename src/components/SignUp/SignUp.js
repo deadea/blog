@@ -13,7 +13,6 @@ const SignUp = () => {
     formState: { errors },
     watch,
   } = useForm();
-  //const [userInfo, setUserInfo] = useState();
   const [registered, setRegistered] = useState(false);
   const [regErrors, setRegErrors] = useState();
   const password = useRef({});
@@ -28,9 +27,7 @@ const SignUp = () => {
 
     const result = blogService.createUser(newData).then((result) => {
       if (result.errors) {
-        //console.log(result.errors);
         setRegErrors(result.errors);
-        //console.log(regErrors);
       } else {
         setRegistered(true);
       }

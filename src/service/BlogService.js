@@ -1,6 +1,5 @@
 class BlogService {
   _apiBase = 'https://kata.academy:8021/api/';
-  //_apiKey = process.env.REACT_APP_KEY;
 
   async getArticles(page) {
     const offset = page === 1 ? 0 : page * 5;
@@ -89,7 +88,6 @@ class BlogService {
       }),
       body: JSON.stringify(data),
     });
-    const result = await res.json();
     return res.ok;
   }
   async favoriteArticle(slug, token) {
@@ -112,7 +110,6 @@ class BlogService {
       }),
     });
     const result = await res.json();
-    console.log(result, 'UNlike');
     return result;
   }
 }

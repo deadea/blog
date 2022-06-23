@@ -1,5 +1,9 @@
 @import '../../assets/colors.scss';
 
+ul.ant-pagination {
+  padding-top: 20px;
+}
+
 .ant-pagination-item.ant-pagination-item-active {
   background-color: $accentColor;
 }
