@@ -41,6 +41,8 @@
   margin-block-end: 0;
   color: $accentColor;
   //cursor: pointer;
+  //overflow-y: hidden;
+  max-width: 660px;
 }
 
 .article__likeBtn {
@@ -94,15 +96,62 @@
   margin-left: 12px;
 }
 .article__descr {
-  margin-block-start: 7px;
+  //margin-block-start: 0;
   margin-block-end: 0px;
   font-family: Inter;
   font-weight: 400;
   line-height: 28px;
   letter-spacing: 0px;
   text-align: left;
-  height: 75vh;
+  //min-height: 75vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.article__descr:first-of-type {
+  color: $secondaryTextColor;
+}
+.article__descr:last-of-type {
+  overflow-wrap: break-word;
+  margin-block-start: 7px;
+}
+.article__container {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+.article__controls {
+  margin-top: 7px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  //justify-content: space-between;
+  align-items: baseline;
+}
+.article__btn_delete,
+.article__btn_edit {
+  //display: block;
+  background: transparent;
+  outline: none;
+  border: 1px solid;
+  border-radius: 4px;
+  padding: 6px 17px;
+  margin-left: 12px;
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  cursor: pointer;
+}
+.article__btn_delete {
+  color: $warningColor;
+  border-color: $warningColor;
+}
+.article__btn_edit,
+.article__btn_edit > a,
+.article__btn_edit > a:hover {
+  color: $successColor;
+  border-color: $successColor;
 }

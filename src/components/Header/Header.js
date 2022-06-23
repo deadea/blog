@@ -22,7 +22,7 @@ const Header = ({ loggedIn, userData, logOut }) => {
         </ul>
         <ul className={classes.header__block}>
           <li className={classes.header__item_loggedin}>
-            <Link to="/" className={classes.header__link}>
+            <Link to="/new-article" className={classes.header__link}>
               Create article
             </Link>
           </li>

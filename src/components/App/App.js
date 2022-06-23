@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import blogService from '../../service/BlogService';
 import storage from '../../service/storage';
@@ -10,6 +10,9 @@ import Spinner from '../Spinner';
 import SignUp from '../SignUp';
 import SignIn from '../SignIn';
 import Profile from '../Profile';
+import NewArticle from '../NewArticle';
+import EditArticle from '../EditArticle';
+import PrivateRoute from '../PrivateRoute/PrivateRoute';
 
 import classes from './App.module.scss';
 import 'antd/dist/antd.css';
@@ -21,22 +24,31 @@ const App = () => {
   const [page, setPage] = useState(1);
   const [loggedIn, setLoggedIn] = useState(false);
   const [userData, setUserData] = useState();
+  const [likes, setLikes] = useState([]);
 
   useEffect(() => {
-    //console.log('useEffect get logged userdata');
     getLoggedUser();
   }, [loggedIn]);
 
   useEffect(() => {
-    //console.log('useEffect load articles');
+    if (loggedIn) {
+      const likes = JSON.parse(storage.getFromStorage('likes'));
+      if (likes) {
+        setLikes(likes);
+      }
+    }
+  }, [loggedIn]);
+
+  useEffect(() => {
     loadArticles(page);
+    setLoading(false);
   }, [userData, loggedIn, page]);
 
   const loadArticles = (page) => {
+    console.log('loadarticles');
     blogService.getArticles(page).then((result) => {
       setData(result.articles);
       setTotal(result.articlesCount);
-      setLoading(false);
     });
   };
   const updatePage = (newpage) => {
@@ -44,7 +56,6 @@ const App = () => {
     loadArticles(newpage);
   };
   const loginSuccess = (user) => {
-    console.log('loginSuccess, now logged in');
     setLoggedIn(true);
   };
   const getLoggedUser = () => {
@@ -58,14 +69,53 @@ const App = () => {
       setLoggedIn(false);
     }
   };
-  const logOut = () => {
-    localStorage.clear();
-    getLoggedUser();
+
+  const addLike = (id) => {
+    const likes = JSON.parse(storage.getFromStorage('likes'));
+    if (likes) {
+      const newLikes = likes.slice(0);
+      newLikes.push(id);
+      storage.setToStorage('likes', JSON.stringify(newLikes));
+      setLikes(newLikes);
+    } else {
+      storage.setToStorage('likes', JSON.stringify([id]));
+      setLikes([id]);
+    }
   };
-  const content = !loading ? (
-    <ArticleList data={data} total={totalArticles} page={page} loggedIn={loggedIn} updatePage={updatePage} />
-  ) : (
+  const removeLike = (id) => {
+    const likes = JSON.parse(storage.getFromStorage('likes'));
+    if (likes) {
+      const newLikes = likes.slice(0);
+      const idx = newLikes.findIndex((el) => el === id);
+      const newArray = [...newLikes.slice(0, idx), ...newLikes.slice(idx + 1)];
+      storage.setToStorage('likes', JSON.stringify(newArray));
+      setLikes(newArray);
+    } else {
+      storage.setToStorage('likes', JSON.stringify([]));
+      setLikes([]);
+    }
+  };
+  const logOut = () => {
+    storage.setToStorage('token', '');
+    getLoggedUser();
+    setLoggedIn(false);
+    setLikes([]);
+  };
+  const content = loading ? (
     <Spinner />
+  ) : (
+    <ArticleList
+      data={data}
+      total={totalArticles}
+      page={page}
+      userData={userData}
+      loggedIn={loggedIn}
+      updatePage={updatePage}
+      addLike={addLike}
+      likes={likes}
+      removeLike={removeLike}
+      loadArticles={() => loadArticles(page)}
+    />
   );
   return (
     <div className={classes.wrapper}>
@@ -78,23 +128,39 @@ const App = () => {
             path="/articles/:slug"
             render={({ match }) => {
               const slug = match.params.slug;
-              return <Article slug={slug} data={data} loggedIn={loggedIn} />;
+              return (
+                <Article
+                  slug={slug}
+                  data={data}
+                  loggedIn={loggedIn}
+                  userData={userData}
+                  loadArticles={() => loadArticles(page)}
+                  addLike={addLike}
+                  likes={likes}
+                  removeLike={removeLike}
+                />
+              );
             }}
             exact
           />
-          <Route path="/sign-up" component={SignUp} exact />;
-          <Route path="/sign-in" render={() => <SignIn loginSuccess={loginSuccess} />} exact />;
           <Route
-            path="/profile"
-            render={() =>
-              loggedIn ? (
-                <Profile userData={userData} getLoggedUser={getLoggedUser} loggedIn={loggedIn} />
-              ) : (
-                <Redirect to="/sign-in" />
-              )
-            }
+            path="/articles/:slug/edit"
+            render={({ match }) => {
+              const slug = match.params.slug;
+              return <EditArticle slug={slug} loadArticles={() => loadArticles(page)} userData={userData} />;
+            }}
             exact
           />
+          ;
+          <Route path="/sign-up" component={SignUp} exact />;
+          <Route path="/sign-in" render={() => <SignIn loginSuccess={loginSuccess} />} exact />;
+          <PrivateRoute path="/profile" loggedIn={loggedIn}>
+            <Profile userData={userData} getLoggedUser={getLoggedUser} />
+          </PrivateRoute>
+          ;
+          <PrivateRoute path="/new-article" loggedIn={loggedIn}>
+            <NewArticle loadArticles={() => loadArticles(page)} userData={userData} />
+          </PrivateRoute>
           ;
           <Route render={() => <h2 className={classes.not__found}>This page does not exist</h2>} exact />;
         </Switch>
@@ -104,3 +170,14 @@ const App = () => {
 };
 
 export default App;
+
+/*
+          <Route
+            path="/profile"
+            render={() =>
+              loggedIn ? <Profile userData={userData} getLoggedUser={getLoggedUser} /> : <Redirect to="/sign-in" />
+            }
+            exact
+          />
+          ;
+*/

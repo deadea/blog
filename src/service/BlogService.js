@@ -58,13 +58,63 @@ class BlogService {
     const result = await res.json();
     return result;
   }
-  /*async getProfile(username) {
-    //неиспользован пока
-    const res = await fetch(`${this._apiBase}profiles/${username}`);
+  async createArticle(data, token) {
+    const res = await fetch(`${this._apiBase}articles`, {
+      method: 'POST',
+      headers: new Headers({
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }),
+      body: JSON.stringify(data),
+    });
     const result = await res.json();
     return result;
   }
-*/
+  async deleteArticle(slug, token) {
+    const res = await fetch(`${this._apiBase}articles/${slug}`, {
+      method: 'DELETE',
+      headers: new Headers({
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }),
+    });
+    return res.ok;
+  }
+  async updateArticle(data, token) {
+    const res = await fetch(`${this._apiBase}articles/${data.slug}`, {
+      method: 'PUT',
+      headers: new Headers({
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }),
+      body: JSON.stringify(data),
+    });
+    const result = await res.json();
+    return res.ok;
+  }
+  async favoriteArticle(slug, token) {
+    const res = await fetch(`${this._apiBase}articles/${slug}/favorite`, {
+      method: 'POST',
+      headers: new Headers({
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }),
+    });
+    const result = await res.json();
+    return result;
+  }
+  async unFavoriteArticle(slug, token) {
+    const res = await fetch(`${this._apiBase}articles/${slug}/favorite`, {
+      method: 'DELETE',
+      headers: new Headers({
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }),
+    });
+    const result = await res.json();
+    console.log(result, 'UNlike');
+    return result;
+  }
 }
 
 const blogService = new BlogService();

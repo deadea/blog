@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
   margin-bottom: 26px;
   filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15));
 }
@@ -39,6 +39,8 @@
   margin-block-end: 0;
   color: $accentColor;
   cursor: pointer;
+  //overflow-y: hidden;
+  //max-width: 600px;
 }
 
 .article__likeBtn {

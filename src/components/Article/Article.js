@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import format from 'date-fns/format';
 import ReactMarkdown from 'react-markdown';
+import { Link, useHistory } from 'react-router-dom';
+import { Button, message, Popconfirm } from 'antd';
 
 import Spinner from '../Spinner';
 import blogService from '../../service/BlogService';
@@ -9,28 +11,48 @@ import likeActive from '../../assets/like_active.svg';
 
 import classes from './article.module.scss';
 
-const Article = ({ slug, loggedIn }) => {
+const Article = ({ slug, loggedIn, userData, loadArticles, addLike, removeLike, likes }) => {
   const [article, setArticle] = useState();
   const [loading, setLoading] = useState(true);
+  let history = useHistory();
 
   useEffect(() => {
-    console.log('load');
-    //setLoading(true);
     if (loading) {
       loadArticle(slug);
     }
-    console.log(article);
-  }, [article]);
+  }, [article, likes]);
 
-  const loadArticle = async (slug) => {
-    await blogService.getArticle(slug).then((result) => {
+  const loadArticle = (slug) => {
+    blogService.getArticle(slug).then((result) => {
       setArticle(result.article);
       setLoading(false);
     });
   };
+  const deleteOnclick = async () => {
+    await blogService.deleteArticle(slug, userData.token).then((result) => {
+      if (result) {
+        loadArticles();
+      }
+    });
+    setTimeout(() => history.push('/'), 300);
+  };
   let tags;
+  const handleLikeBtn = async () => {
+    if (!likes.includes(slug)) {
+      await blogService.favoriteArticle(slug, userData.token).then((result) => {
+        addLike(slug);
+        loadArticle(slug);
+      });
+    } else {
+      await blogService.unFavoriteArticle(slug, userData.token).then((result) => {
+        console.log('dislike');
+        removeLike(slug);
+        loadArticle(slug);
+      });
+    }
+    loadArticles();
+  };
   if (article !== undefined) {
-    console.log('loaded');
     if (article.tagList.length > 0) {
       tags = article.tagList.map((item, idx) => {
         return (
@@ -40,7 +62,23 @@ const Article = ({ slug, loggedIn }) => {
         );
       });
     }
-    const like = article.favorited && loggedIn ? likeActive : likeInactive;
+    const likeImg = likes.includes(slug) ? likeActive : likeInactive; //проверить отображение если логин но не лайкнуто
+    const articleControls = () => {
+      const text = 'Are you sure to delete this article?';
+      if (loggedIn && userData.username === article.author.username) {
+        return (
+          <div className={classes.article__controls}>
+            <Popconfirm placement="rightTop" title={text} onConfirm={deleteOnclick} okText="Yes" cancelText="No">
+              <button className={classes.article__btn_delete}>Delete</button>
+            </Popconfirm>
+
+            <Link to={`/articles/${slug}/edit`}>
+              <button className={classes.article__btn_edit}>Edit</button>
+            </Link>
+          </div>
+        );
+      }
+    };
     return (
       <div className={classes.wrapper}>
         <div className={classes.article}>
@@ -48,8 +86,8 @@ const Article = ({ slug, loggedIn }) => {
             <div className={classes.article__info}>
               <div className={classes.article__data}>
                 <h5 className={classes.article__title}>{article.title}</h5>
-                <button className={classes.article__likeBtn} onClick={() => console.log('like')}>
-                  <img src={like} alt="like"></img>
+                <button className={classes.article__likeBtn} onClick={handleLikeBtn} disabled={!loggedIn}>
+                  <img src={likeImg} alt="like"></img>
                 </button>
                 <span className={classes.article__likes}>{article.favoritesCount}</span>
               </div>
@@ -62,6 +100,10 @@ const Article = ({ slug, loggedIn }) => {
               </div>
               <img className={classes.article__avatar} src={article.author.image} alt="author avatar"></img>
             </div>
+          </div>
+          <div className={classes.article__container}>
+            <p className={classes.article__descr}>{article.description}</p>
+            {articleControls()}
           </div>
           <div className={classes.article__descr}>
             <ReactMarkdown>{article.body}</ReactMarkdown>

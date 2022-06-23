@@ -6,7 +6,7 @@ import blogService from '../../service/BlogService';
 
 import classes from './profile.module.scss';
 
-const Profile = ({ userData, getLoggedUser, loggedIn }) => {
+const Profile = ({ userData, getLoggedUser }) => {
   const {
     register,
     handleSubmit,

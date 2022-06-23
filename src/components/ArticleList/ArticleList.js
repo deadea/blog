@@ -6,9 +6,31 @@ import ArticleShort from '../ArticleShort';
 import classes from './articleList.module.scss';
 import './pagination.scss';
 
-const ArticleList = ({ data, total, page, loggedIn, updatePage }) => {
+const ArticleList = ({
+  data,
+  total,
+  userData,
+  page,
+  loggedIn,
+  updatePage,
+  likes,
+  addLike,
+  removeLike,
+  loadArticles,
+}) => {
   const articles = data.map((item) => {
-    return <ArticleShort key={item.slug} data={item} loggedIn={loggedIn} />;
+    return (
+      <ArticleShort
+        key={item.slug}
+        data={item}
+        loggedIn={loggedIn}
+        likes={likes}
+        addLike={addLike}
+        removeLike={removeLike}
+        userData={userData}
+        loadArticles={loadArticles}
+      />
+    );
   });
   return (
     <div className={classes.list}>
