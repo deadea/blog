@@ -87,8 +87,8 @@ const Article = ({ slug, loggedIn, userData, loadArticles, addLike, removeLike, 
                 <h5 className={classes.article__title}>{article.title}</h5>
                 <button className={classes.article__likeBtn} onClick={handleLikeBtn} disabled={!loggedIn}>
                   <img src={likeImg} alt="like"></img>
+                  <span className={classes.article__likes}>{article.favoritesCount}</span>
                 </button>
-                <span className={classes.article__likes}>{article.favoritesCount}</span>
               </div>
               <div className={classes.article__tags}>{tags}</div>
             </div>

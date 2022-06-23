@@ -56,8 +56,8 @@ const ArticleShort = ({ data, loggedIn, likes, addLike, removeLike, userData, lo
             </Link>
             <button disabled={!loggedIn} className={classes.article__likeBtn} onClick={handleLikeBtn}>
               <img src={like} alt="like"></img>
+              <span className={classes.article__likes}>{data.favoritesCount}</span>
             </button>
-            <span className={classes.article__likes}>{data.favoritesCount}</span>
           </div>
           <div className={classes.article__tags}>{tags}</div>
         </div>

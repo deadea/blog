@@ -51,12 +51,12 @@
   font-size: 12px;
   line-height: 22px;
   letter-spacing: 0px;
+  padding-left: 5px;
 }
 .article__tags {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  //justify-content: space-between;
 }
 .article__tag {
   height: 20px;
