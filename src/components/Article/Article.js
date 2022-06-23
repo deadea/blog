@@ -61,7 +61,7 @@ const Article = ({ slug, loggedIn, userData, loadArticles, addLike, removeLike, 
         );
       });
     }
-    const likeImg = likes.includes(slug) ? likeActive : likeInactive; //проверить отображение если логин но не лайкнуто
+    const likeImg = likes.includes(slug) ? likeActive : likeInactive;
     const articleControls = () => {
       const text = 'Are you sure to delete this article?';
       if (loggedIn && userData.username === article.author.username) {
